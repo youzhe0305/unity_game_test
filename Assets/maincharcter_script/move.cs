@@ -8,7 +8,7 @@ public class move : MonoBehaviour
     // Start is called before the first frame update
     public float XForce = 5;
     public float JumpForece = 10;
-    public float XSpeedConstrait = 0.1f;
+    public float XSpeedConstrait = 0.5f;
 
     public float YSpeedConstrait = 0.1f;
 
@@ -33,7 +33,6 @@ public class move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {  
-        
         if(is_jump==true) player_ani.SetInteger("status",2);
         else if(is_walking==true) player_ani.SetInteger("status",1);
         else player_ani.SetInteger("status",0);
@@ -41,7 +40,7 @@ public class move : MonoBehaviour
             Instantiate(bullet,this.gameObject.transform.position,Quaternion.identity);       
         }
         if(Input.GetKey(KeyCode.D)){
-            body.AddForce(new Vector2(XForce,0),ForceMode2D.Impulse);
+            body.AddForce(new Vector2(XForce*Time.deltaTime,0),ForceMode2D.Impulse);
         }
         if(Input.GetKey(KeyCode.D)){
             if(player_sprite.flipX==true) player_sprite.flipX = false;
@@ -58,7 +57,7 @@ public class move : MonoBehaviour
             is_walking = false;
         }
         if(Input.GetKey(KeyCode.A)){
-            body.AddForce(new Vector2(-XForce,0),ForceMode2D.Impulse);     
+            body.AddForce(new Vector2(-XForce*Time.deltaTime,0),ForceMode2D.Impulse);     
         }       
         if(body.velocity.x >= XSpeedConstrait){
             body.velocity = new Vector2(XSpeedConstrait,body.velocity.y);
